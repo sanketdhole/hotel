@@ -1,0 +1,38 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% tailwind_css %}
+    <title>{% block title %}Your Project{% endblock %}</title>
+</head>
+<body class="bg-gray-100">
+        <nav class="bg-blue-600 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <div class="text-white text-lg font-bold">Hilton</div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="/rooms" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Rooms</a>
+                    <a href="/rooms/room-rate" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Room Rates</a>
+                    <a href="/rooms/discount" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Discount Rates</a>
+                    <a href="/rooms/over-ridden-rates" class="text-white hover:bg-blue-500 px-3 py-2 rounded">Overridden Rates </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-button" class="text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container mx-auto mt-4 h-screen">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="bg-blue-600 p-4 mt-4 text-center text-white">
+            &copy; 2024 Hilton. All rights reserved.
+        </footer>
+
+    </body>
+    </html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if form.instance.pk %}Update Room Rate{% else %}Create Room Rate{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4 items-center">{% if form.instance.pk %}Update Room Rate{% else %}Create Room Rate{% endif %}</h1>
+    <form method="post" class="max-w-lg mx-auto bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="mb-4">
+            <label for="id_room_name" class="block text-gray-700 text-sm font-bold mb-2">Room Name</label>
+            {{ form.room_name }}
+            {% if form.room_name.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.room_name.errors|join:", " }}</p>
+            {% endif %}
+        </div>
+        <div class="mb-4">
+            <label for="id_default_rate" class="block text-gray-700 text-sm font-bold mb-2">Default Rate</label>
+            {{ form.default_rate }}
+            {% if form.default_rate.errors %}
+                <p class="text-red-500 text-xs italic">{{ form.default_rate.errors|join:", " }}</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            {% if form.instance.pk %}Update{% else %}Create{% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}
