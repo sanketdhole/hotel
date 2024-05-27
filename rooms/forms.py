@@ -1,5 +1,5 @@
 from django import forms
-from .models import RoomRate, OverriddenRoomRate, Discount
+from .models import RoomRate, OverriddenRoomRate, Discount, DiscountRoomRate
 
 class RoomRateForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,8 @@ class DiscountForm(forms.ModelForm):
     class Meta:
         model = Discount
         fields = ['discount_id', 'discount_name', 'discount_type', 'discount_value']
+
+class DiscountRoomRateForm(forms.ModelForm):
+    class Meta:
+        model = DiscountRoomRate
+        fields = ['room_rate', 'discount']

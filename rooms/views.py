@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from datetime import date
 
 from .models import RoomRate, OverriddenRoomRate, DiscountRoomRate, Discount
-from .forms import RoomRateForm, OverriddenRoomRateForm, DiscountForm
+from .forms import RoomRateForm, OverriddenRoomRateForm, DiscountForm, DiscountRoomRateForm
 
 def default_view(request):
     stay_date_str = request.GET.get('stay_date')
@@ -129,3 +129,31 @@ def discount_delete(request, pk):
     discount = Discount.objects.get(pk=pk)
     discount.delete()
     return redirect('discount_list')
+
+def discount_room_rate_list(request):
+    discount_room_rates = DiscountRoomRate.objects.all()
+    if request.method == 'POST':
+        form = DiscountRoomRateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('discount_room_rate')
+    else:
+        form = DiscountRoomRateForm()
+    return render(request, 'discount_room_rates.html', {'discount_room_rates': discount_room_rates, 'form': form})
+
+def discount_room_rate_update(request, discount_room_rate_id):
+    discount_room_rate = get_object_or_404(DiscountRoomRate, pk=discount_room_rate_id)
+    if request.method == 'POST':
+        form = DiscountRoomRateForm(request.POST, instance=discount_room_rate)
+        if form.is_valid():
+            form.save()
+            return redirect('discount_room_rate_list')
+    else:
+        form = DiscountRoomRateForm(instance=discount_room_rate)
+    return render(request, 'discount_room_rate_form.html', {'form': form})
+
+# View to delete a discount-room rate association
+def discount_room_rate_delete(request, discount_room_rate_id):
+    discount_room_rate = get_object_or_404(DiscountRoomRate, pk=discount_room_rate_id)
+    discount_room_rate.delete()
+    return redirect('discount_room_rate')

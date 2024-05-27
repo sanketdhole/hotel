@@ -18,5 +18,9 @@ urlpatterns = [
     path('discount/create/', views.discount_create, name='discount_create'),
     path('discount/update/<int:pk>/', views.discount_update, name='discount_update'),
     path('discount/delete/<int:pk>/', views.discount_delete, name='discount_delete'),
+    # apply discounts to rooms
+    path('discount-room-rates/', views.discount_room_rate_list, name='discount_room_rate'),
+    path('discount-room-rates/update/<int:discount_room_rate_id>/', views.discount_room_rate_update, name='discount_room_rate_update'),
+    path('discount-room-rates/delete/<int:discount_room_rate_id>/', views.discount_room_rate_delete, name='discount_room_rate_delete'),
     
 ]

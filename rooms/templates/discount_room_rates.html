@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Discount
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Discount Room Rates</h1>
+    <div class="bg-white shadow-md rounded p-4 mb-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="id_room_rate" class="block text-gray-700 text-sm font-bold mb-2">Room Rate</label>
+                <select id="id_room_rate" name="room_rate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    {% for room_rate in form.room_rate.field.queryset %}
+                        <option value="{{ room_rate.pk }}" {% if room_rate.pk == form.room_rate.value %}selected{% endif %}>
+                            {{ room_rate }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="id_discount" class="block text-gray-700 text-sm font-bold mb-2">Discount</label>
+                <select id="id_discount" name="discount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    {% for discount in form.discount.field.queryset %}
+                        <option value="{{ discount.pk }}" {% if discount.pk == form.discount.value %}selected{% endif %}>
+                            {{ discount }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Add Discount to Room Rate
+            </button>
+        </form>
+    </div>
+    
+    <ul class="space-y-4">
+        {% for discount_room_rate in discount_room_rates %}
+            <li class="bg-white shadow-md rounded p-4 flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold">{{ discount_room_rate.room_rate.room_name }} - {{ discount_room_rate.discount.discount_name }}</h2>
+                    <p class="text-gray-700">{{ discount_room_rate.discount.get_discount_type_display }}: {{ discount_room_rate.discount.discount_value }}</p>
+                </div>
+                <div class="space-x-2">
+                    <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                    <a href="#7" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+    {% endblock %}
